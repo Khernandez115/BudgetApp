@@ -19,9 +19,7 @@ def get_user_expense():
     print(f"🎯 Getting User Expense!")
     expense_name = input("Enter expense name: ")
     expense_amount = float(input("Enter expense amount: "))
-
-    print(f"You've entered {expense_name}, {expense_amount}")
-
+   
     expense_categories = [
        "Food",
        "Rent",
@@ -64,7 +62,7 @@ def summarize_expenses(expense_file_path, budget):
     with open(expense_file_path,"r") as f:
         lines = f.readlines()
         for line in lines: 
-            expense_name, expense_amount, expense_category = line.strip.split(",")
+            expense_name, expense_amount, expense_category = line.strip().split(",")
             line_expense = Expense(
                 name=expense_name,
                 amount=float(expense_amount),
@@ -76,13 +74,14 @@ def summarize_expenses(expense_file_path, budget):
         for expense in expenses:
             key=expense.category
             if key in amount_by_category:
-                amount_by_category[key] += expense_amount
+                amount_by_category[key] += expense.amount
             else:
-                amount_by_category[key] = expense_amount
+                amount_by_category[key] = expense.amount
 
         print("Expenses By Category:")
-        for key, amount in amount_by_category():
-            print(f" {key}: ${amount:.2f}")
+        for key, amount in amount_by_category.items():
+            amt = float(amount)
+            print(f" {key}: ${amt:.2f}")
 
         total_spent = sum([x.amount for x in expenses])
         print(f"Total Spent: ${total_spent:.2f}")
